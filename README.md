@@ -1,2 +1,10 @@
 # flutter-reference
-Some examples, exercises and concepts used for reference of Flutter &amp; Dart
+
+A starter kit for my personal knowledge in **Flutter** and **Dart** programming. 
+
+## Flutter
+## Dart
+## Basics
+## Advanced
+## Testing
+## State Management
