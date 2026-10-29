@@ -44,7 +44,9 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final constantNum = ref.watch(constantProvider);
     final count = ref.watch(counterProvider);
+
     return Scaffold(
       appBar: AppBar(title: Text('Provider example')),
       body: Center(
@@ -52,6 +54,14 @@ class MyHomePage extends ConsumerWidget {
           crossAxisAlignment: .center,
           mainAxisAlignment: .center,
           children: [
+            Text(
+              'Constant int value: ',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Text(
+              '$constantNum',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             Text('Counter:', style: Theme.of(context).textTheme.bodyLarge),
             Text('$count', style: Theme.of(context).textTheme.headlineMedium),
             SizedBox(height: 16.0),
@@ -85,25 +95,25 @@ class MyHomePage extends ConsumerWidget {
   }
 }
 
-final counterProvider = NotifierProvider(Counter.new);
+// Simple provider
+final constantProvider = Provider<int>((ref) {
+  return 42;
+});
 
-class Counter extends Notifier {
-  int initialValue = 42;
+// Notifier provider
+final counterProvider = NotifierProvider<CounterNotifier, int>(
+  CounterNotifier.new,
+);
+
+class CounterNotifier extends Notifier<int> {
+  static const int _initialValue = 0;
 
   @override
-  int build() {
-    return initialValue;
-  }
+  int build() => _initialValue;
 
-  void increment() {
-    state++;
-  }
+  void increment() => state++;
 
-  void decrement() {
-    state--;
-  }
+  void decrement() => state--;
 
-  void reset() {
-    state = initialValue;
-  }
+  void reset() => state = _initialValue;
 }
